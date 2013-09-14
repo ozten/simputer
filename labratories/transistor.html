@@ -21,9 +21,6 @@ var toggle = new ToggleSwitch({
     domId: 'toggle',
     state: true
 });
-// Toggle has no input function, but can be switched...
-// Toggle has an output function, which when it runs
-// sends a different signal
 
 var transistor = new Transistor();
 toggle.setOutputFn(transistor.getInputFn());

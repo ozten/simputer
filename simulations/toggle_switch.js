@@ -5,6 +5,14 @@ that are manually actuated by a mechanical lever, handle,
 or rocking mechanism.
 
 https://en.wikipedia.org/wiki/Toggle_switch#Toggle_switch
+
+Simulation Notes:
+Input is not simulated, assumed to be the same state
+State - On or Off
+State Change - DOM click event or programs calling `toggle`
+Output is a callback function which is replaced by another component
+
+
 */
 window.ToggleSwitch = function(options) {
     var that = this;

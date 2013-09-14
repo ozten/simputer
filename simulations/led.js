@@ -15,7 +15,12 @@ Mainly used in simulations to give visual feedback.
 Usage:
 
     var led1 = new LED({domId: 'led1', color:'red'});
-    led1.input(true);
+    var in = led1.getInputFn();
+    in(true);
+    in(false);
+
+Simulation Notes:
+Input is modeled as a function which is hooked up as a callback.
 
 This will create a new LED, which will start rendering itself
 */

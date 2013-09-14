@@ -21,11 +21,13 @@ Main Operations:
 * Amplification
 * Switching
 
+https://en.wikipedia.org/wiki/Transistor
+
 Simulation Notes:
 Input is modeled as a function which is hooked up as a callback.
-Output is a function which is replaced by another component
+Output is a callback function which is replaced by another component
+Ground is not simulated
 
-https://en.wikipedia.org/wiki/Transistor
 */
 
 window.Transistor = function() {
