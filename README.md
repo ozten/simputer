@@ -28,4 +28,11 @@ but a way to make sense of these simulations is as follows:
 
 * ???
 * ???
+* LogicGates
 * Transistor
+
+## Credits
+
+Simulation and Labratory code / graphics are new and BSD licensed.
+Comments which end with Wikipedia links are lifted directly from wikipedia.
+Thanks web!

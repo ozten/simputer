@@ -1,5 +1,4 @@
 (function() {
-01234567890123456789012345678901234567890123456789012345678901234567890123456789
 /*
 Transistor - A transistor is a semiconductor device used to amplify and switch
 electronic signals and electrical power. It is composed of semiconductor
@@ -22,15 +21,43 @@ Main Operations:
 * Amplification
 * Switching
 
+Simulation Notes:
+Input is modeled as a function which is hooked up as a callback.
+Output is a function which is replaced by another component
+
 https://en.wikipedia.org/wiki/Transistor
 */
 
-window.Transistor = function(state) {
-    if ('boolean' !== typeof state) {
-        throw new Error('Invalid input, expected boolean');
-    }
+window.Transistor = function() {
     var that = this;
-    that.state = state;
+    // NO-OP
+    that._outputFn = function() { return that._inputFn(); };
+
+    that._inputFn = function(signal) {
+        if ('boolean' !== typeof signal) {
+            throw new Error('Invalid input, expected boolean signal');
+        }
+        that._signal = signal;
+        if (that._outputFn) that._outputFn(that._signal);
+    };
+
+    /**
+     * Get an input callback function from this transistor
+     */
+    that.getInputFn = function() {
+        return that._inputFn;
+    };
+
+    /**
+     * Connect an output callback function to this transistor
+     */
+    that.setOutputFn = function(output) {
+        if ('function' !== typeof output) {
+                throw new Error('Invalid output, expected function');
+        }
+        that._outputFn = output;
+    };
+    // setGround - not currently simulated
     return that;
 };
 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Transistor Lab</title>
+    <link rel="stylesheet" href="css/stylo.css">
+    <link rel="stylesheet" href="css/transistor.css">
+  </head>
+  <body>
+    <h1>Transistor Lab</h1>
+    <div id="toggle"></div>
+    <div id="led"></div>
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="../simulations/transistor.js"></script>
+    <script src="../simulations/toggle_switch.js"></script>
+
+    <script src="../simulations/led.js"></script>
+<script>
+
+var toggle = new ToggleSwitch({
+    domId: 'toggle',
+    state: true
+});
+// Toggle has no input function, but can be switched...
+// Toggle has an output function, which when it runs
+// sends a different signal
+
+var transistor = new Transistor();
+toggle.setOutputFn(transistor.getInputFn());
+
+var led = new LED({
+    domId: 'led',
+});
+transistor.setOutputFn(led.getInputFn());
+
+</script>
+  </body>
+</html>
