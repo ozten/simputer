@@ -46,7 +46,6 @@ window.LED = function(options) {
      */
     that.draw = function() {
         var label = that._signal ? 'Light' : 'Dark';
-        console.log('Drawing LED ', label);
         $('#' + options.domId + ' div').text(label);
     };
 

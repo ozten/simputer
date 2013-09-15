@@ -81,11 +81,12 @@ function BaseGate(evaluateInputsFn) {
      */
     that.getInputAFn = function() {
         return function(signal) {
-            if ('boolean' !== typeof signal) {
-                throw new Error('Invalid input, expected boolean signal');
+            console.log('a', signal);
+            if ('number' !== typeof signal) {
+                throw new Error('Invalid input, expected number signal');
             }
-            that._signalA = signalA;
-            if (that._outputFn) {
+            that._signalA = signal;
+            if (that._outputFn && that._signalB) {
                 that._outputFn(
                     evaluateInputsFn(that._signalA, that._signalB));
             }
@@ -97,11 +98,11 @@ function BaseGate(evaluateInputsFn) {
      */
     that.getInputBFn = function() {
         return function(signal) {
-            if ('boolean' !== typeof signal) {
-                throw new Error('Invalid input, expected boolean signal');
+            if ('number' !== typeof signal) {
+                throw new Error('Invalid input, expected number signal');
             }
-            that._signalB = signalB;
-            if (that._outputFn) {
+            that._signalB = signal;
+            if (that._outputFn && that._signalA) {
                 that._outputFn(
                     evaluateInputsFn(that._signalA, that._signalB));
             }
