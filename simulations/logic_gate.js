@@ -6,7 +6,38 @@ and produces a single logical output.
 
 https://en.wikipedia.org/wiki/Logic_gates
 https://en.wikipedia.org/wiki/AND_gate
+
+Most gates take two inputs, however the NOT gate has only
+one input.
+
 */
+
+window.NotGate = function() {
+    var that = this;
+    that.super = new BaseGate(function(a, b) {
+        return AND_GATE_MAP[a][b];
+    });
+    that.getInputFn = function() {
+        return function(signal) {
+            console.log('logic_gate Not Gate input', signal);
+            if ('number' !== typeof signal) {
+                throw new Error('Invalid input, expected number signal');
+            }
+            that._signal = signal === 0 ? 1 : 0;
+            console.log(that._signal);
+            if (that._outputFn) that._outputFn(that._signal);
+        };
+    };
+    that.setOutputFn = function(output) {
+        if ('function' !== typeof output) {
+            var e = new Error('Invalid output, expected function');
+            console.log(e.stack);
+                throw new Error('Invalid output, expected function');
+        }
+        console.log('Overriding outputFn');
+        that._outputFn = output;
+    };
+};
 
 var AND_GATE_MAP = [[0, 0],[0, 1]];
 window.AndGate = function() {
@@ -14,9 +45,9 @@ window.AndGate = function() {
     that.super = new BaseGate(function(a, b) {
         return AND_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
 };
 
 var OR_GATE_MAP = [[0, 1], [1,1]];
@@ -24,19 +55,20 @@ window.OrGate = function() {
     that.super = new BaseGate(function(a, b) {
         return AND_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
 };
 
-window.NotGate = function() {
+var NOR_GATE_MAP = [[1, 0],[0, 0]];
+window.NorGate = function() {
     var that = this;
     that.super = new BaseGate(function(a, b) {
-        return AND_GATE_MAP[a][b] === 0 ? 1 : 0;
+        return NOR_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
 };
 
 function BaseGate(evaluateInputsFn) {
