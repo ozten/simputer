@@ -1,0 +1,195 @@
+login_gates.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Logic Gates Lab</title>
+    <link rel="stylesheet" href="css/stylo.css">
+    <link rel="stylesheet" href="css/transistor.css">
+  </head>
+  <body>
+    <h1>Logic Gate Lab</h1>
+    <h2>Not Gate</h2>
+    <div id="toggle-not-gate"></div>
+    <div id="led-not-gate"></div>
+    <hr>
+
+    <h2>And Gate</h2>
+    <div id="toggle-and-gate-a"></div>
+    <div id="toggle-and-gate-b"></div>
+    <div id="led-and-gate"></div>
+    <hr>
+
+    <h2>Or Gate</h2>
+    <div id="toggle-or-gate-a"></div>
+    <div id="toggle-or-gate-b"></div>
+    <div id="led-or-gate"></div>
+    <hr>
+
+    <h2>NAND Gate</h2>
+    <div id="toggle-nand-gate-a"></div>
+    <div id="toggle-nand-gate-b"></div>
+    <div id="led-nand-gate"></div>
+    <hr>
+
+    <h2>NOR Gate</h2>
+    <div id="toggle-nor-gate-a"></div>
+    <div id="toggle-nor-gate-b"></div>
+    <div id="led-nor-gate"></div>
+    <hr>
+
+    <h2>XOR Gate</h2>
+    <div id="toggle-xor-gate-a"></div>
+    <div id="toggle-xor-gate-b"></div>
+    <div id="led-xor-gate"></div>
+    <hr>
+
+    <h2>XNOR Gate</h2>
+    <div id="toggle-xnor-gate-a"></div>
+    <div id="toggle-xnor-gate-b"></div>
+    <div id="led-xnor-gate"></div>
+    <hr>
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="../simulations/logic_gate.js"></script>
+    <script src="../simulations/toggle_switch.js"></script>
+
+    <script src="../simulations/led.js"></script>
+<script>
+//Not Gate
+var notToggle = new ToggleSwitch({
+    domId: 'toggle-not-gate',
+    state: 0
+});
+
+var notGate = new NotGate();
+notToggle.setOutputFn(notGate.getInputFn());
+
+var notLed = new LED({
+    domId: 'led-not-gate',
+});
+notGate.setOutputFn(notLed.getInputFn());
+
+//And Gate
+var andToggleA = new ToggleSwitch({
+    domId: 'toggle-and-gate-a',
+    state: 0
+});
+
+var andGate = new AndGate();
+andToggleA.setOutputFn(andGate.getInputAFn());
+
+var andToggleB = new ToggleSwitch({
+    domId: 'toggle-and-gate-b',
+    state: 0
+});
+andToggleB.setOutputFn(andGate.getInputBFn());
+
+var andLed = new LED({
+    domId: 'led-and-gate',
+});
+andGate.setOutputFn(andLed.getInputFn());
+
+//Or Gate
+var orToggleA = new ToggleSwitch({
+    domId: 'toggle-or-gate-a',
+    state: 0
+});
+
+var orGate = new OrGate();
+orToggleA.setOutputFn(orGate.getInputAFn());
+
+var orToggleB = new ToggleSwitch({
+    domId: 'toggle-or-gate-b',
+    state: 0
+});
+orToggleB.setOutputFn(orGate.getInputBFn());
+
+var orLed = new LED({
+    domId: 'led-or-gate',
+});
+orGate.setOutputFn(orLed.getInputFn());
+
+//NAnd Gate
+var nandToggleA = new ToggleSwitch({
+    domId: 'toggle-nand-gate-a',
+    state: 0
+});
+
+var nandGate = new NAndGate();
+nandToggleA.setOutputFn(nandGate.getInputAFn());
+
+var nandToggleB = new ToggleSwitch({
+    domId: 'toggle-nand-gate-b',
+    state: 0
+});
+nandToggleB.setOutputFn(nandGate.getInputBFn());
+
+var nandLed = new LED({
+    domId: 'led-nand-gate',
+});
+nandGate.setOutputFn(nandLed.getInputFn());
+
+//NOr Gate
+var norToggleA = new ToggleSwitch({
+    domId: 'toggle-nor-gate-a',
+    state: 0
+});
+
+var norGate = new NOrGate();
+norToggleA.setOutputFn(norGate.getInputAFn());
+
+var norToggleB = new ToggleSwitch({
+    domId: 'toggle-nor-gate-b',
+    state: 0
+});
+norToggleB.setOutputFn(norGate.getInputBFn());
+
+var norLed = new LED({
+    domId: 'led-nor-gate',
+});
+norGate.setOutputFn(norLed.getInputFn());
+
+//XOr Gate
+var xorToggleA = new ToggleSwitch({
+    domId: 'toggle-xor-gate-a',
+    state: 0
+});
+
+var xorGate = new XOrGate();
+xorToggleA.setOutputFn(xorGate.getInputAFn());
+
+var xorToggleB = new ToggleSwitch({
+    domId: 'toggle-xor-gate-b',
+    state: 0
+});
+xorToggleB.setOutputFn(xorGate.getInputBFn());
+
+var xorLed = new LED({
+    domId: 'led-xor-gate',
+});
+xorGate.setOutputFn(xorLed.getInputFn());
+
+//XNOr Gate
+var xnorToggleA = new ToggleSwitch({
+    domId: 'toggle-xnor-gate-a',
+    state: 0
+});
+
+var xnorGate = new XNOrGate();
+xnorToggleA.setOutputFn(xnorGate.getInputAFn());
+
+var xnorToggleB = new ToggleSwitch({
+    domId: 'toggle-xnor-gate-b',
+    state: 0
+});
+xnorToggleB.setOutputFn(xnorGate.getInputBFn());
+
+var xnorLed = new LED({
+    domId: 'led-xnor-gate',
+});
+xnorGate.setOutputFn(xnorLed.getInputFn());
+
+</script>
+  </body>
+</html>
