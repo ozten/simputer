@@ -129,6 +129,7 @@ function BaseGate(evaluateInputsFn) {
                 throw new Error('Invalid output, expected function');
         }
         that._outputFn = output;
+        that._evaluateInputs();
     };
 
     that._evaluateInputs = function() {
