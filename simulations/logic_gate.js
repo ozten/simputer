@@ -38,37 +38,32 @@ var AND_GATE_MAP = [[0, 0],[0, 1]];
 
 window.AndGate = function() {
     var that = this;
-    that.zuper = new BaseGate(function(a, b) {
+    that.super = new BaseGate(function(a, b) {
         return AND_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
+    inherit(that);
     return that;
 };
 
 var OR_GATE_MAP = [[0, 1], [1,1]];
+
 window.OrGate = function() {
     var that = this;
-    that.zuper = new BaseGate(function(a, b) {
+    that.super = new BaseGate(function(a, b) {
         return OR_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
+    inherit(that);
     return that;
 };
 
 var NOR_GATE_MAP = [[1, 0],[0, 0]];
+
 window.NorGate = function() {
     var that = this;
-    that.zuper = new BaseGate(function(a, b) {
+    that.super = new BaseGate(function(a, b) {
         return NOR_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
-    return that;
+    inherit(that);return that;
 };
 
 function BaseGate(evaluateInputsFn) {
@@ -125,5 +120,10 @@ function BaseGate(evaluateInputsFn) {
     return that;
 }
 
+function inherit(that) {
+    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
+}
 
 })();
