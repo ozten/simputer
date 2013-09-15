@@ -36,8 +36,8 @@ window.Transistor = function() {
     that._outputFn = function() { return that._inputFn(); };
 
     that._inputFn = function(signal) {
-        if ('boolean' !== typeof signal) {
-            throw new Error('Invalid input, expected boolean signal');
+        if ('number' !== typeof signal) {
+            throw new Error('Invalid input, expected number signal');
         }
         that._signal = signal;
         if (that._outputFn) that._outputFn(that._signal);

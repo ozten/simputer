@@ -16,8 +16,8 @@ Usage:
 
     var led1 = new LED({domId: 'led1', color:'red'});
     var in = led1.getInputFn();
-    in(true);
-    in(false);
+    in(1);
+    in(0);
 
 Simulation Notes:
 Input is modeled as a function which is hooked up as a callback.
@@ -27,10 +27,10 @@ This will create a new LED, which will start rendering itself
 
 window.LED = function(options) {
     var that = this;
-    that._signal = false;
+    that._signal = 0;
     that._inputFn = function(signal) {
-        if ('boolean' !== typeof signal) {
-                throw new Error('Invalid input, expected boolean signal');
+        if ('number' !== typeof signal) {
+                throw new Error('Invalid input, expected number signal');
         }
         that._signal = signal;
         that.draw();

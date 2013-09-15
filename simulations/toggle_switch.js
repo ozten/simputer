@@ -16,8 +16,8 @@ Output is a callback function which is replaced by another component
 */
 window.ToggleSwitch = function(options) {
     var that = this;
-    if ('boolean' !== typeof options.state) {
-        throw new Error('Invalid input, expected boolean');
+    if ('number' !== typeof options.state) {
+        throw new Error('Invalid input, expected number');
     }
     that._state = options.state;
     if ('string' !== typeof options.domId) {
@@ -42,7 +42,7 @@ window.ToggleSwitch = function(options) {
      * Programmatically switches the state of the toggle switch
      */
     that.toggle = function() {
-        that._state = ! that._state;
+        that._state = that._state === 0 ? 1 : 0;
         console.log('Calling output Fn with ', that._state);
         that._outputFn(that._state);
     };
