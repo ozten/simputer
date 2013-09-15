@@ -58,10 +58,40 @@ window.OrGate = function() {
 
 var NOR_GATE_MAP = [[1, 0],[0, 0]];
 
-window.NorGate = function() {
+window.NOrGate = function() {
     var that = this;
     that.super = new BaseGate(function(a, b) {
         return NOR_GATE_MAP[a][b];
+    });
+    inherit(that);return that;
+};
+
+var NAND_GATE_MAP = [[1, 1],[1, 0]];
+
+window.NAndGate = function() {
+    var that = this;
+    that.super = new BaseGate(function(a, b) {
+        return NAND_GATE_MAP[a][b];
+    });
+    inherit(that);return that;
+};
+
+var XOR_GATE_MAP = [[0, 1],[1, 0]];
+
+window.XOrGate = function() {
+    var that = this;
+    that.super = new BaseGate(function(a, b) {
+        return XOR_GATE_MAP[a][b];
+    });
+    inherit(that);return that;
+};
+
+var XNOR_GATE_MAP = [[1, 0],[0, 1]];
+
+window.XNOrGate = function() {
+    var that = this;
+    that.super = new BaseGate(function(a, b) {
+        return XNOR_GATE_MAP[a][b];
     });
     inherit(that);return that;
 };
