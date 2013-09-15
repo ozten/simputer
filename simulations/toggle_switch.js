@@ -36,6 +36,8 @@ window.ToggleSwitch = function(options) {
                 throw new Error('Invalid output, expected function');
         }
         that._outputFn = output;
+        console.log('flushing output');
+        output(that._state);
     };
 
     /**

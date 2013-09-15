@@ -14,17 +14,12 @@ one input.
 
 window.NotGate = function() {
     var that = this;
-    that.super = new BaseGate(function(a, b) {
-        return AND_GATE_MAP[a][b];
-    });
     that.getInputFn = function() {
         return function(signal) {
-            console.log('logic_gate Not Gate input', signal);
             if ('number' !== typeof signal) {
                 throw new Error('Invalid input, expected number signal');
             }
             that._signal = signal === 0 ? 1 : 0;
-            console.log(that._signal);
             if (that._outputFn) that._outputFn(that._signal);
         };
     };
@@ -34,62 +29,60 @@ window.NotGate = function() {
             console.log(e.stack);
                 throw new Error('Invalid output, expected function');
         }
-        console.log('Overriding outputFn');
         that._outputFn = output;
     };
+    return that;
 };
 
 var AND_GATE_MAP = [[0, 0],[0, 1]];
+
 window.AndGate = function() {
     var that = this;
-    that.super = new BaseGate(function(a, b) {
+    that.zuper = new BaseGate(function(a, b) {
         return AND_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
+    return that;
 };
 
 var OR_GATE_MAP = [[0, 1], [1,1]];
 window.OrGate = function() {
-    that.super = new BaseGate(function(a, b) {
-        return AND_GATE_MAP[a][b];
+    var that = this;
+    that.zuper = new BaseGate(function(a, b) {
+        return OR_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
+    return that;
 };
 
 var NOR_GATE_MAP = [[1, 0],[0, 0]];
 window.NorGate = function() {
     var that = this;
-    that.super = new BaseGate(function(a, b) {
+    that.zuper = new BaseGate(function(a, b) {
         return NOR_GATE_MAP[a][b];
     });
-    that.getInputAFn = function(o) { return that.super.getInputAFn(o); };
-    that.getInputBFn = function(o) { return that.super.getInputBFn(o); };
-    that.setOutputFn = function(o) { return that.super.setOutputFn(o); };
+    that.getInputAFn = function(o) { return that.zuper.getInputAFn(o); };
+    that.getInputBFn = function(o) { return that.zuper.getInputBFn(o); };
+    that.setOutputFn = function(o) { return that.zuper.setOutputFn(o); };
+    return that;
 };
 
 function BaseGate(evaluateInputsFn) {
     var that = this;
     // NO-OP
-    that._outputFn = function() { return that._inputFn(); };
+    that._outputFn = function() {};
 
     /**
      * Get an input callback function from this transistor
      */
     that.getInputAFn = function() {
         return function(signal) {
-            console.log('a', signal);
-            if ('number' !== typeof signal) {
-                throw new Error('Invalid input, expected number signal');
-            }
             that._signalA = signal;
-            if (that._outputFn && that._signalB) {
-                that._outputFn(
-                    evaluateInputsFn(that._signalA, that._signalB));
-            }
+            that._evaluateInputs();
         };
     };
 
@@ -98,14 +91,8 @@ function BaseGate(evaluateInputsFn) {
      */
     that.getInputBFn = function() {
         return function(signal) {
-            if ('number' !== typeof signal) {
-                throw new Error('Invalid input, expected number signal');
-            }
             that._signalB = signal;
-            if (that._outputFn && that._signalA) {
-                that._outputFn(
-                    evaluateInputsFn(that._signalA, that._signalB));
-            }
+            that._evaluateInputs();
         };
     };
 
@@ -118,6 +105,24 @@ function BaseGate(evaluateInputsFn) {
         }
         that._outputFn = output;
     };
+
+    that._evaluateInputs = function() {
+        if ('function' === typeof that._outputFn &&
+                'number'   === typeof that._signalA &&
+                'number'   === typeof that._signalB) {
+            if ((that._signalA !== 0 && that._signalA !== 1) ||
+                (that._signalB !== 0 && that._signalB !== 1)) {
+                throw new Error('Bad signal, expected 0 or 1 got ' + a + ', ' + b);
+            }
+            that._outputFn(
+                evaluateInputsFn(that._signalA, that._signalB));
+
+        } else {
+            that._outputFn(0);
+        }
+    };
+
+    return that;
 }
 
 

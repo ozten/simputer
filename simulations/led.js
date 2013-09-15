@@ -27,11 +27,13 @@ This will create a new LED, which will start rendering itself
 
 window.LED = function(options) {
     var that = this;
+    console.log('LED constructor');
     that._signal = 0;
     that._inputFn = function(signal) {
         if ('number' !== typeof signal) {
                 throw new Error('Invalid input, expected number signal');
         }
+        console.log('LED signal is ', signal);
         that._signal = signal;
         that.draw();
     };
@@ -53,6 +55,7 @@ window.LED = function(options) {
      * Initialize this LED light
      */
     that.init = function() {
+        console.log('initializing LED');
         var label = that._signal ? 'Light' : 'Dark';
         $('#' + options.domId).append(
             //'<canvas width="40" height="40"></canvas>');
