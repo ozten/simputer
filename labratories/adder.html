@@ -1,0 +1,54 @@
+login_gates.html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Adder Lab</title>
+    <link rel="stylesheet" href="css/stylo.css">
+    <link rel="stylesheet" href="css/transistor.css">
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="../simulations/logic_gate.js"></script>
+    <script src="../simulations/adder.js"></script>
+    <script src="../simulations/toggle_switch.js"></script>
+    <script src="../simulations/led.js"></script>
+  </head>
+  <body>
+    <h1>Adder Gate Lab</h1>
+    <h2>Half Adder</h2>
+    <div id="toggle-a-input"></div>
+    <div id="toggle-b-input"></div>
+    <div id="led-sum">LED</div>
+    <div id="led-carry">LED</div>
+    <hr>
+
+<script>
+var aToggle = new ToggleSwitch({
+    domId: 'toggle-a-input',
+    state: 0
+});
+
+var bToggle = new ToggleSwitch({
+    domId: 'toggle-b-input',
+    state: 0
+});
+console.log('creating adder');
+var halfAdder = new HalfAdder();
+console.log(halfAdder);
+console.log(halfAdder.getInputAFn());
+window.ha = halfAdder;
+aToggle.setOutputFn(halfAdder.getInputAFn);
+bToggle.setOutputFn(halfAdder.getInputBFn);
+
+var sLed = new LED({
+    domId: 'led-sum',
+});
+halfAdder.setOutputSFn(sLed.getInputFn());
+
+var cLed = new LED({
+    domId: 'led-carry',
+});
+halfAdder.setOutputCFn(cLed.getInputFn());
+</script>
+  </body>
+</html>
