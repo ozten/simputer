@@ -17,7 +17,7 @@ window.HalfAdder = function() {
     var xorGate = new XOrGate();
     // Caching to avoid generating functions on each call
     that._xorGateInputAFn = xorGate.getInputAFn();
-    that._xorGateInputAFn = xorGate.getInputBFn();
+    that._xorGateInputBFn = xorGate.getInputBFn();
 
     var andGate = new AndGate();
     that._andGateInputAFn = andGate.getInputAFn();
