@@ -1,4 +1,3 @@
-login_gates.html
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,11 +31,8 @@ var bToggle = new ToggleSwitch({
     domId: 'toggle-b-input',
     state: 0
 });
-console.log('creating adder');
+
 var halfAdder = new HalfAdder();
-console.log(halfAdder);
-console.log(halfAdder.getInputAFn());
-window.ha = halfAdder;
 aToggle.setOutputFn(halfAdder.getInputAFn);
 bToggle.setOutputFn(halfAdder.getInputBFn);
 
@@ -49,6 +45,47 @@ var cLed = new LED({
     domId: 'led-carry',
 });
 halfAdder.setOutputCFn(cLed.getInputFn());
+</script>
+
+    <h2>Full Adder</h2>
+    <div id="toggle-fa-input"></div>
+    <div id="toggle-fb-input"></div>
+    <div id="toggle-fc-input"></div>
+    Carry: <div id="led-fcarry"></div>
+    Sum: <div id="led-fsum"></div>
+
+    <hr>
+
+<script>
+var aToggle = new ToggleSwitch({
+    domId: 'toggle-fa-input',
+    state: 0
+});
+
+var bToggle = new ToggleSwitch({
+    domId: 'toggle-fb-input',
+    state: 0
+});
+
+var cToggle = new ToggleSwitch({
+    domId: 'toggle-fc-input',
+    state: 0
+});
+
+var fullAdder = new FullAdder();
+aToggle.setOutputFn(fullAdder.getInputAFn);
+bToggle.setOutputFn(fullAdder.getInputBFn);
+cToggle.setOutputFn(fullAdder.getInputCFn);
+
+var fsLed = new LED({
+    domId: 'led-fsum',
+});
+fullAdder.setOutputSFn(fsLed.getInputFn());
+
+var fcLed = new LED({
+    domId: 'led-fcarry',
+});
+fullAdder.setOutputCFn(fcLed.getInputFn());
 </script>
   </body>
 </html>

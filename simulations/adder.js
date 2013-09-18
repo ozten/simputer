@@ -63,4 +63,92 @@ window.HalfAdder = function() {
     };
     return that;
 };
+
+/**
+ * Input A is connected to XOR 0 and AND 0
+ * Input B is connected to XOR 0 and AND 0
+ * Carry In is connectd to XOR 1 and AND 1
+ * XOR 0 output connected to XOR 1
+ * AND 0 output connected to OR
+ * XOR 1 output connected to Signal
+ * AND 1 output connected to OR
+ * OR output connected to Carry-Over
+ */
+window.FullAdder = function() {
+    var that = this;
+    var xorGate0 = new XOrGate();
+    var xorGate1 = new XOrGate();
+    that._xorGate0InputAFn = xorGate0.getInputAFn();
+    that._xorGate0InputBFn = xorGate0.getInputBFn();
+    that._xorGate1InputAFn = xorGate1.getInputAFn();
+    that._xorGate1InputBFn = xorGate1.getInputBFn();
+
+    var andGate0 = new AndGate();
+    var andGate1 = new AndGate();
+    that._andGate0InputAFn = andGate0.getInputAFn();
+    that._andGate0InputBFn = andGate0.getInputBFn();
+    that._andGate1InputAFn = andGate1.getInputAFn();
+    that._andGate1InputBFn = andGate1.getInputBFn();
+
+    var orGate = new OrGate();
+    that._orGateInputAFn = orGate.getInputAFn();
+    that._orGateInputBFn = orGate.getInputBFn();
+
+    xorGate0.setOutputFn(function(signal) {
+        that._xorGate1InputAFn(signal);
+        that._andGate1InputAFn(signal);
+    });
+
+    andGate1.setOutputFn(function(signal){
+        that._orGateInputAFn(signal);
+    });
+    andGate0.setOutputFn(function(signal) {
+        that._orGateInputBFn(signal);
+    });
+    /**
+     * Get an input callback function for first bit to add
+     */
+    that.getInputAFn = function(signal) {
+        that._xorGate0InputAFn(signal);
+        that._andGate0InputAFn(signal);
+    };
+
+    /**
+     * Get an input callback function for second bit to add
+     */
+    that.getInputBFn = function(signal) {
+        that._xorGate0InputBFn(signal);
+        that._andGate0InputBFn(signal);
+    };
+    console.log('creating getInputCFn');
+    /**
+     * Get an input callback function for Carry over input
+     */
+    that.getInputCFn = function(signal) {
+        that._xorGate1InputBFn(signal);
+        that._andGate1InputBFn(signal);
+    };
+
+    /**
+     * Connect an output callback function to the Sum output
+     */
+    that.setOutputSFn = function(output) {
+        if ('function' !== typeof output) {
+                throw new Error('Invalid output, expected function');
+        }
+        xorGate1.setOutputFn(output);
+    };
+
+    /**
+     * Connect an output callback function to the Carry-over output
+     */
+    that.setOutputCFn = function(output) {
+        if ('function' !== typeof output) {
+                throw new Error('Invalid output, expected function');
+        }
+        orGate.setOutputFn(output);
+    };
+    return that;
+};
+
 })();
