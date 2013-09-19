@@ -36,7 +36,6 @@ window.ToggleSwitch = function(options) {
                 throw new Error('Invalid output, expected function');
         }
         that._outputFn = output;
-        console.log('flushing output');
         output(that._state);
     };
 
@@ -45,7 +44,6 @@ window.ToggleSwitch = function(options) {
      */
     that.toggle = function() {
         that._state = that._state === 0 ? 1 : 0;
-        console.log('Calling output Fn with ', that._state);
         that._outputFn(that._state);
     };
 

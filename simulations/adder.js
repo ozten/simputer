@@ -120,7 +120,7 @@ window.FullAdder = function() {
         that._xorGate0InputBFn(signal);
         that._andGate0InputBFn(signal);
     };
-    console.log('creating getInputCFn');
+
     /**
      * Get an input callback function for Carry over input
      */
