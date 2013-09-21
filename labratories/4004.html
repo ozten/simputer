@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>4004 CPU Lab</title>
+    <link rel="stylesheet" href="css/stylo.css">
+    <link rel="stylesheet" href="css/transistor.css">
+
+    <script src="js/jquery-2.0.3.min.js"></script>
+    <script src="../simulations/logic_gate.js"></script>
+    <script src="../simulations/adder.js"></script>
+    <script src="../simulations/toggle_switch.js"></script>
+    <script src="../simulations/led.js"></script>
+  </head>
+  <body>
+    <h1>4004 CPU</h1>
+    <h2>4 bit ALU</h2>
+    <h3>Arithmetic Unit</h2>
+Can add numbers that total less than 16.
+
+<table border="1" cellpadding="3">
+    <tr>
+        <th>Carry Input</th>
+
+        <th>1s</th>
+        <th>2s</th>
+        <th>4s</th>
+        <th>-</th>
+        <th rowspan="3">Sum</th>
+        <th>1s</th>
+        <th>2s</th>
+        <th>4s</th>
+
+        <th rowspan="3">Sign</th>
+        <td rowspan="3"><div id="led-sum3"></div></td>
+
+        <th rowspan="3">Carry Output</th>
+        <td rowspan="3"><div id="led-c1-output"></div></td>
+
+    </tr>
+    <tr>
+        <td rowspan="2"><div id="toggle-c0-input"></div></td>
+
+        <td><div id="toggle-a0-input"></div></td>
+        <td><div id="toggle-a1-input"></div></td>
+        <td><div id="toggle-a2-input"></div></td>
+        <td><div id="toggle-a3-input"></div></td>
+
+        <td rowspan="2"><div id="led-sum0"></div>
+        <td rowspan="2"><div id="led-sum1"></div>
+        <td rowspan="2"><div id="led-sum2"></div></td>
+    </tr>
+    <tr>
+        <td><div id="toggle-b0-input"></div></td>
+        <td><div id="toggle-b1-input"></div></td>
+        <td><div id="toggle-b2-input"></div></td>
+        <td><div id="toggle-b3-input"></div></td>
+    </tr>
+</table>
+
+<script>
+var carryInputToggle = new ToggleSwitch({
+    domId: 'toggle-c0-input',
+    state: 0
+});
+
+var a0Toggle = new ToggleSwitch({
+    domId: 'toggle-a0-input',
+    state: 0
+});
+
+var b0Toggle = new ToggleSwitch({
+    domId: 'toggle-b0-input',
+    state: 0
+});
+
+var a1Toggle = new ToggleSwitch({
+    domId: 'toggle-a1-input',
+    state: 0
+});
+
+var b1Toggle = new ToggleSwitch({
+    domId: 'toggle-b1-input',
+    state: 0
+});
+
+var a2Toggle = new ToggleSwitch({
+    domId: 'toggle-a2-input',
+    state: 0
+});
+
+var b2Toggle = new ToggleSwitch({
+    domId: 'toggle-b2-input',
+    state: 0
+});
+
+var a3Toggle = new ToggleSwitch({
+    domId: 'toggle-a3-input',
+    state: 0
+});
+
+var b3Toggle = new ToggleSwitch({
+    domId: 'toggle-b3-input',
+    state: 0
+});
+
+var carryOutputToggle = new ToggleSwitch({
+    domId: 'toggle-c1-output',
+    state: 0
+});
+
+
+
+
+var fullAdder0 = new FullAdder();
+var fullAdder1 = new FullAdder();
+var fullAdder2 = new FullAdder();
+var fullAdder3 = new FullAdder();
+
+a0Toggle.setOutputFn(fullAdder0.getInputAFn);
+b0Toggle.setOutputFn(fullAdder0.getInputBFn);
+carryInputToggle.setOutputFn(fullAdder0.getInputCFn);
+
+fullAdder0.setOutputCFn(fullAdder1.getInputCFn);
+
+a1Toggle.setOutputFn(fullAdder1.getInputAFn);
+b1Toggle.setOutputFn(fullAdder1.getInputBFn);
+
+fullAdder1.setOutputCFn(fullAdder2.getInputCFn);
+
+a2Toggle.setOutputFn(fullAdder2.getInputAFn);
+b2Toggle.setOutputFn(fullAdder2.getInputBFn);
+
+fullAdder2.setOutputCFn(fullAdder3.getInputCFn);
+
+a3Toggle.setOutputFn(fullAdder3.getInputAFn);
+b3Toggle.setOutputFn(fullAdder3.getInputBFn);
+
+var carryOutLed = new LED({
+    domId: 'led-c1-output',
+});
+fullAdder3.setOutputCFn(carryOutLed.getInputFn());
+
+var sum0Led = new LED({
+    domId: 'led-sum0',
+});
+fullAdder0.setOutputSFn(sum0Led.getInputFn());
+
+var sum1Led = new LED({
+    domId: 'led-sum1',
+});
+fullAdder1.setOutputSFn(sum1Led.getInputFn());
+
+var sum2Led = new LED({
+    domId: 'led-sum2',
+});
+fullAdder2.setOutputSFn(sum2Led.getInputFn());
+
+var sum3Led = new LED({
+    domId: 'led-sum3',
+});
+fullAdder3.setOutputSFn(sum3Led.getInputFn());
+</script>
+<h3>4 bit Logic Unit</h3>
+  </body>
+</html>
