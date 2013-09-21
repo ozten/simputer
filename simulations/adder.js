@@ -151,4 +151,39 @@ window.FullAdder = function() {
     return that;
 };
 
+/**
+ * 4 bit adder - roughly follows naming convensions of the 4008 chip
+ */
+window.FourBitAdder = function() {
+    var that = this;
+    that.fullAdder0 = new FullAdder();
+    that.a0 = that.fullAdder0.getInputAFn;
+    that.b0 = that.fullAdder0.getInputBFn;
+    that.cIn = that.fullAdder0.getInputCFn;
+
+    that.fullAdder1 = new FullAdder();
+    that.a1 = that.fullAdder1.getInputAFn;
+    that.b1 = that.fullAdder1.getInputBFn;
+
+    that.fullAdder2 = new FullAdder();
+    that.a2 = that.fullAdder2.getInputAFn;
+    that.b2 = that.fullAdder2.getInputBFn;
+
+    that.fullAdder3 = new FullAdder();
+    that.a3 = that.fullAdder3.getInputAFn;
+    that.b3 = that.fullAdder3.getInputBFn;
+
+    that.fullAdder0.setOutputCFn(that.fullAdder1.getInputCFn);
+    that.fullAdder1.setOutputCFn(that.fullAdder2.getInputCFn);
+    that.fullAdder2.setOutputCFn(that.fullAdder3.getInputCFn);
+
+    that.setOutputCFn = that.fullAdder3.setOutputCFn;
+
+    that.setOutputS0Fn = that.fullAdder0.setOutputSFn;
+    that.setOutputS1Fn = that.fullAdder1.setOutputSFn;
+    that.setOutputS2Fn = that.fullAdder2.setOutputSFn;
+    that.setOutputS3Fn = that.fullAdder3.setOutputSFn;
+};
+
+
 })();

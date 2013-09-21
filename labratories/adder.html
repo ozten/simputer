@@ -183,56 +183,45 @@ var carryOutputToggle = new ToggleSwitch({
 });
 
 
+var fourBitAdder = new FourBitAdder();
 
+a0Toggle.setOutputFn(fourBitAdder.a0);
+b0Toggle.setOutputFn(fourBitAdder.b0);
+carryInputToggle.setOutputFn(fourBitAdder.cIn);
 
-var fullAdder0 = new FullAdder();
-var fullAdder1 = new FullAdder();
-var fullAdder2 = new FullAdder();
-var fullAdder3 = new FullAdder();
+a1Toggle.setOutputFn(fourBitAdder.a1);
+b1Toggle.setOutputFn(fourBitAdder.b1);
 
-a0Toggle.setOutputFn(fullAdder0.getInputAFn);
-b0Toggle.setOutputFn(fullAdder0.getInputBFn);
-carryInputToggle.setOutputFn(fullAdder0.getInputCFn);
+a2Toggle.setOutputFn(fourBitAdder.a2);
+b2Toggle.setOutputFn(fourBitAdder.b2);
 
-fullAdder0.setOutputCFn(fullAdder1.getInputCFn);
-
-a1Toggle.setOutputFn(fullAdder1.getInputAFn);
-b1Toggle.setOutputFn(fullAdder1.getInputBFn);
-
-fullAdder1.setOutputCFn(fullAdder2.getInputCFn);
-
-a2Toggle.setOutputFn(fullAdder2.getInputAFn);
-b2Toggle.setOutputFn(fullAdder2.getInputBFn);
-
-fullAdder2.setOutputCFn(fullAdder3.getInputCFn);
-
-a3Toggle.setOutputFn(fullAdder3.getInputAFn);
-b3Toggle.setOutputFn(fullAdder3.getInputBFn);
+a3Toggle.setOutputFn(fourBitAdder.a3);
+b3Toggle.setOutputFn(fourBitAdder.b3);
 
 var carryOutLed = new LED({
     domId: 'led-c1-output',
 });
-fullAdder3.setOutputCFn(carryOutLed.getInputFn());
+fourBitAdder.setOutputCFn(carryOutLed.getInputFn());
 
 var sum0Led = new LED({
     domId: 'led-sum0',
 });
-fullAdder0.setOutputSFn(sum0Led.getInputFn());
+fourBitAdder.setOutputS0Fn(sum0Led.getInputFn());
 
 var sum1Led = new LED({
     domId: 'led-sum1',
 });
-fullAdder1.setOutputSFn(sum1Led.getInputFn());
+fourBitAdder.setOutputS1Fn(sum1Led.getInputFn());
 
 var sum2Led = new LED({
     domId: 'led-sum2',
 });
-fullAdder2.setOutputSFn(sum2Led.getInputFn());
+fourBitAdder.setOutputS2Fn(sum2Led.getInputFn());
 
 var sum3Led = new LED({
     domId: 'led-sum3',
 });
-fullAdder3.setOutputSFn(sum3Led.getInputFn());
+fourBitAdder.setOutputS3Fn(sum3Led.getInputFn());
 
 
 </script>
